@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-jetty</artifactId>
+            <artifactId>camel-jetty8</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>
