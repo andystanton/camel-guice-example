@@ -53,7 +53,7 @@ public class HttpRoutesTest extends CamelTestSupport {
                 from(String.format(
                                 HttpRoutes.URI_PATTERN,
                                 HttpRoutes.COMPONENT_NAME,
-                                HttpRoutesTest.TEST_HOST,
+                                HttpRoutes.HOST,
                                 HttpRoutes.PORT,
                                 HttpRoutes.PING_ENDPOINT,
                                 HttpRoutes.PING_OPTIONS)

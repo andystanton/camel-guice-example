@@ -39,3 +39,25 @@ Server: Jetty(8.y.z-SNAPSHOT)
 
 pong
 ```
+
+## Running the example with Docker
+
+You can build and run the example without needing Java or Maven to be installed locally using Docker:
+
+```sh
+$ docker run \
+    -w /tmp/camel-guice-example \
+    -p 8080:8080 \
+    -it \
+    --rm \
+    maven \
+    sh -c 'git clone https://github.com/andystanton/camel-guice-example.git . \
+        && mvn clean package \
+        && java -jar target/camel-guice-example-1.0.0.jar'
+```
+
+The IP address is now that of the Docker Host rather than localhost (assumed to be named 'default' here). If you use Docker Machine to manage your hosts, you can use the following curl command to verify:
+
+```sh
+$ curl -i "http://$(docker-machine ip default):8080/ping"
+```

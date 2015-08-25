@@ -13,7 +13,6 @@
         <httpcomponents.version>4.5</httpcomponents.version>
         <camel.version>2.15.2</camel.version>
         <guice.version>4.0</guice.version>
-        <jetty.version>8.1.17.v20150415</jetty.version>
         <logback-classic.version>1.1.3</logback-classic.version>
 
         <!-- Plugins -->
@@ -30,25 +29,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback-classic.version}</version>
-        </dependency>
-
-        <!-- Guice -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-
-        <!-- Jetty-->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-http</artifactId>
-            <version>${jetty.version}</version>
         </dependency>
 
         <!-- Camel -->
