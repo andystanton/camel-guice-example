@@ -46,11 +46,7 @@ You can build and run the example without needing Java or Maven to be installed 
 
 ```sh
 $ docker run \
-    -w /tmp/camel-guice-example \
-    -p 8080:8080 \
-    -it \
-    --rm \
-    maven \
+    -it --rm -w /tmp/camel-guice-example -p 8080:8080 maven \
     sh -c 'git clone https://github.com/andystanton/camel-guice-example.git . \
         && mvn clean package \
         && java -jar target/camel-guice-example-1.0.0.jar'
