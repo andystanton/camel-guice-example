@@ -1,4 +1,4 @@
-# Camel + Guice Example
+# Camel + Guice Example [![Build Status](https://travis-ci.org/andystanton/camel-guice-example.svg)](https://travis-ci.org/andystanton/camel-guice-example)
 
 An example of how to bootstrap a simple HTTP Server using Camel and Guice in Java 8.
 
