@@ -1,55 +1,51 @@
 package is.stanton.andy.routes;
 
 import com.google.inject.Guice;
-import org.apache.camel.EndpointInject;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.mock.MockEndpoint;
+import is.stanton.andy.processors.PingProcessor;
+import org.apache.camel.Exchange;
 import org.apache.camel.guice.CamelModuleWithMatchingRoutes;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class HttpRoutesTest extends CamelTestSupport {
-    private static final String MOCK_PING = "mock:ping";
+public class HttpRoutesTest {
+    private static Logger log = LoggerFactory.getLogger(HttpRoutesTest.class);
 
-    @EndpointInject(uri = MOCK_PING)
-    protected MockEndpoint resultEndpoint;
+    @Mock
+    private PingProcessor pingProcessor;
 
     @Test
-    public void testPingEndpoint() throws Exception {
-        resultEndpoint.expectedMessageCount(1);
+    public void testPingRoute() throws Exception {
+        HttpHost target = new HttpHost("127.0.0.1", 8080);
+        HttpRequest request = new HttpGet("/ping");
 
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpHost target = new HttpHost("127.0.0.1", 8080);
-            HttpRequest request = new HttpGet("/ping");
-            client.execute(target, request);
+        try (CloseableHttpClient client = HttpClients.createDefault();
+             CloseableHttpResponse response = client.execute(target, request)) {
+            log.info(Integer.toString(response.getStatusLine().getStatusCode()));
         }
-
-        resultEndpoint.assertIsSatisfied();
+        Mockito.verify(pingProcessor).process(Mockito.any(Exchange.class));
     }
 
-    @BeforeClass
-    public static void beforeClass() throws Exception {
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
         Guice.createInjector(new CamelModuleWithMatchingRoutes() {
             @Override
             protected void configure() {
                 super.configure();
-                bind(HttpRoutesTest.class);
+                bind(PingProcessor.class).toInstance(pingProcessor);
+                bind(HttpRoutes.class);
             }
         });
-    }
-
-    @Override
-    protected RouteBuilder createRouteBuilder() {
-        return new RouteBuilder() {
-            public void configure() {
-                from("jetty:http://0.0.0.0:8080/ping?chunked=false").to(MOCK_PING);
-            }
-        };
     }
 }
