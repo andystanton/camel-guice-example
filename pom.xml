@@ -12,7 +12,7 @@
         <!-- Dependencies -->
         <httpcomponents.version>4.5</httpcomponents.version>
         <camel.version>2.15.2</camel.version>
-        <guice.version>4.0</guice.version>
+        <guava.version>18.0</guava.version>
         <logback-classic.version>1.1.3</logback-classic.version>
 
         <!-- Plugins -->
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <!-- Camel -->
@@ -65,6 +65,12 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jetty9</artifactId>
             <version>${camel.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-servlet_3.0_spec</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
