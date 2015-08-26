@@ -8,7 +8,7 @@
 
     <logger name="is.stanton.andy" level="DEBUG"/>
 
-    <root level="info">
+    <root level="error">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
