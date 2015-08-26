@@ -33,11 +33,11 @@ This should return the following response:
 
 ```
 HTTP/1.1 200 OK
-Content-Type: text/plain;charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Length: 4
-Server: Jetty(8.y.z-SNAPSHOT)
+Server: Jetty(9.2.z-SNAPSHOT)
 
-pong
+pong%
 ```
 
 ## Running the example with Docker
@@ -52,7 +52,7 @@ $ docker run \
         && java -jar target/camel-guice-example-1.0.0.jar'
 ```
 
-The IP address is now that of the Docker Host rather than localhost (assumed to be named 'default' here). If you use Docker Machine to manage your hosts, you can use the following curl command to verify:
+The IP address is now that of the Docker Host rather than localhost. If you use Docker Machine to manage your hosts, you can use the following curl command to verify (assumes current host is named 'default'):
 
 ```sh
 $ curl -i "http://$(docker-machine ip default):8080/ping"

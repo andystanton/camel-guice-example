@@ -16,7 +16,6 @@ import org.junit.Test;
 
 public class HttpRoutesTest extends CamelTestSupport {
     private static final String MOCK_PING = "mock:ping";
-    private static final String TEST_HOST = "127.0.0.1";
 
     @EndpointInject(uri = MOCK_PING)
     protected MockEndpoint resultEndpoint;
@@ -26,8 +25,8 @@ public class HttpRoutesTest extends CamelTestSupport {
         resultEndpoint.expectedMessageCount(1);
 
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpHost target = new HttpHost(HttpRoutesTest.TEST_HOST, HttpRoutes.PORT);
-            HttpRequest request = new HttpGet(HttpRoutes.PING_ENDPOINT);
+            HttpHost target = new HttpHost("127.0.0.1", 8080);
+            HttpRequest request = new HttpGet("/ping");
             client.execute(target, request);
         }
 
@@ -40,7 +39,6 @@ public class HttpRoutesTest extends CamelTestSupport {
             @Override
             protected void configure() {
                 super.configure();
-
                 bind(HttpRoutesTest.class);
             }
         });
@@ -50,14 +48,7 @@ public class HttpRoutesTest extends CamelTestSupport {
     protected RouteBuilder createRouteBuilder() {
         return new RouteBuilder() {
             public void configure() {
-                from(String.format(
-                                HttpRoutes.URI_PATTERN,
-                                HttpRoutes.COMPONENT_NAME,
-                                HttpRoutes.HOST,
-                                HttpRoutes.PORT,
-                                HttpRoutes.PING_ENDPOINT,
-                                HttpRoutes.PING_OPTIONS)
-                ).to(MOCK_PING);
+                from("jetty:http://0.0.0.0:8080/ping?chunked=false").to(MOCK_PING);
             }
         };
     }

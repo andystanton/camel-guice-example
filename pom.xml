@@ -31,6 +31,13 @@
             <version>${logback-classic.version}</version>
         </dependency>
 
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+
         <!-- Camel -->
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -45,12 +52,18 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-jetty8</artifactId>
+            <artifactId>camel-guice</artifactId>
             <version>${camel.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-guice</artifactId>
+            <artifactId>camel-jetty9</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>
